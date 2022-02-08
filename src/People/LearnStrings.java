@@ -2,7 +2,7 @@ package People;
 
 public class LearnStrings {
     public static void main(String[] args) {
-        String phoneNumber = "(234) 333-5551";
+        String phoneNumber = "  (763)  872 -  6633 ".strip();
 
         String areaCode = parseAreaCode(phoneNumber);
         String exchange = parseExchange(phoneNumber);
@@ -14,16 +14,25 @@ public class LearnStrings {
     }
 
     public static String parseAreaCode(String phoneNumber) {
-        return phoneNumber.substring(1, 4);
+        int openingBrackets = phoneNumber.indexOf("(");
+        int closingBrackets = phoneNumber.indexOf(")");
+        String cleanNumber = phoneNumber.substring(openingBrackets + 1, closingBrackets);
+
+        return cleanNumber;
     }
 
     public static String parseExchange(String phoneNumber) {
-        String strippedNumber = phoneNumber.substring(phoneNumber.indexOf(" "), phoneNumber.indexOf("-")).strip();
+        int whiteSpaceId = phoneNumber.indexOf(" ");
+        int dashId = phoneNumber.indexOf("-");
+        String strippedNumber = phoneNumber.substring(whiteSpaceId + 1, dashId).strip();
+
         return strippedNumber;
     }
 
     public static String parseLineNumber(String phoneNumber) {
-        String strippedNumber = phoneNumber.substring(phoneNumber.indexOf("-")).strip();
-        return strippedNumber.replace("-", "");
+        int dashId = phoneNumber.indexOf("-");
+        String strippedNumber = phoneNumber.substring(dashId + 1).strip();
+
+        return strippedNumber;
     }
 }
