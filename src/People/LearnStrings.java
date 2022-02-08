@@ -2,25 +2,28 @@ package People;
 
 public class LearnStrings {
     public static void main(String[] args) {
-        String text = "apple";
+        String phoneNumber = "(234) 333-5551";
 
-        // Different ways to concatenate String
-        String firstPart = text.substring(0, 1);
-        String secondPart = text.substring(1);
-        String capitalFirstLetter = firstPart.toUpperCase();
-        int capacity = capitalFirstLetter.length() + secondPart.length();
+        String areaCode = parseAreaCode(phoneNumber);
+        String exchange = parseExchange(phoneNumber);
+        String lineNumber = parseLineNumber(phoneNumber);
 
-//        String newText = text.substring(0, 1).toUpperCase() + text.substring(1);
+        System.out.println(areaCode);
+        System.out.println(exchange);
+        System.out.println(lineNumber);
+    }
 
-//        String newText = capitalFirstLetter.concat(secondPart);
+    public static String parseAreaCode(String phoneNumber) {
+        return phoneNumber.substring(1, 4);
+    }
 
-//        String newText = new StringBuilder(capacity)
-//                .append(capitalFirstLetter)
-//                .append(secondPart)
-//                .toString();
+    public static String parseExchange(String phoneNumber) {
+        String strippedNumber = phoneNumber.substring(phoneNumber.indexOf(" "), phoneNumber.indexOf("-")).strip();
+        return strippedNumber;
+    }
 
-        System.out.format("%s", capitalFirstLetter + secondPart);
-
-//        System.out.println(newText);
+    public static String parseLineNumber(String phoneNumber) {
+        String strippedNumber = phoneNumber.substring(phoneNumber.indexOf("-")).strip();
+        return strippedNumber.replace("-", "");
     }
 }
