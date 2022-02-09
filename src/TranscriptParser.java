@@ -11,18 +11,20 @@ public class TranscriptParser {
                 Cumulative GPA (Weighted)		3.82
                 Cumulative GPA (Unweighted)	3.46
                 """;
+
         String regex = """
                 Student\\sNumber:\\s(?<studentNumber>\\d{10}).* # Grab student number
                 Grade:\\s+(?<grade>\\d{1,2}).* # Grab grade
                 Birthdate:\\s+(?<birthMonth>\\d{1,2})/(?<birthDay>\\d{1,2})/(?<birthYear>\\d{4}).* # Grab birthdate
                 Gender:\\s+(?<gender>\\w+)\\b.* # Grab gender
-                State\\sID:\\s+(?<stateID>\\d{10}).* # Grab State ID
-                \\s+\\b.*
-                Weighted\\)\\s+(?<weightedGPA>[\\d\\.]+).* # Grab the weighted GPA
-                Unweighted\\)\\s+(?<unweightedGPA>[\\d\\.]+).* # Grab the unweighted GPA
+                State\\sID:\\s+(?<stateID>\\d{10})\\b.*? # Grab State ID
+                Cumulative.*?(?<weightedGPA>[\\d\\.]+)\\b.* # Grab the weighted GPA
+                Cumulative.*?(?<unweightedGPA>[\\d\\.]+)\\b.* # Grab the unweighted GPA
                 """;
+
         Pattern pat = Pattern.compile(regex, Pattern.DOTALL | Pattern.COMMENTS);
         Matcher mat = pat.matcher(transcript);
+
         if(mat.matches()) {
             System.out.format("Student Number: %s\n", mat.group("studentNumber"));
             System.out.format("Grade: %s\n", mat.group("grade"));
