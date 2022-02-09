@@ -3,7 +3,7 @@ package section03.exercise05;
 public class Main {
 
     public static void main(String[] args) {
-        String address = "  12345   Big St.  , Alphabet City,  CA  90210  ".strip();
+        String address = "  12345   Big St.  , Alphabet City  ,  CA  90210  ".strip();
 
         String buildingNumber = address.split(" ")[0];
         String street = findStreet(address);
@@ -27,25 +27,14 @@ public class Main {
     }
 
     public static String findCity(String address) {
-        int firstComma = address.indexOf(",");
-        int lastComma = address.lastIndexOf(",");
-        String strippedCity = address.substring(firstComma + 1, lastComma).strip();
-
-        return strippedCity;
+        return address.split(",")[1].strip();
     }
 
     public static String findState(String address) {
-        int lastComma = address.lastIndexOf(",");
-        int lastSpace = address.lastIndexOf(" ");
-        String strippedState = address.substring(lastComma + 1, lastSpace).strip();
-
-        return strippedState;
+        return address.split(",")[2].strip().split(" ")[0];
     }
 
     public static String findPostalCode(String address) {
-        int lastSpace = address.lastIndexOf(" ");
-        String strippedPostalCode = address.substring(lastSpace + 1);
-
-        return strippedPostalCode;
+        return address.split(",")[2].strip().split(" ")[1];
     }
 }
