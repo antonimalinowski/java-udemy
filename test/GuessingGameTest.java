@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GuessingGameTest {
 
@@ -24,17 +24,17 @@ public class GuessingGameTest {
     @Test
     public void testOneWrongNegGuessSituation() {
         String message = game.guess(-5);
-        assertEquals("You didn't get it", message);
+        assertEquals("You didn't get it - you are too low", message);
     }
 
     @Test
     public void testOneWrongPosGuessSituation() {
         int randomNum = game.getRandomNumber();
         String message = game.guess(randomNum + 1);
-        assertEquals("You didn't get it", message);
+        assertEquals("You didn't get it - you are too high", message);
     }
 
-    @RepeatedTest(5)
+    @Test
     public void testRandomNumberGeneration() {
         // 1 2 3 4 5 6 7 8 9 10
         // 1 1 1 1 0 0 1 1 0  1 -> 10
@@ -53,7 +53,7 @@ public class GuessingGameTest {
     }
 
     @Test
-    public void testFourWrongGuesses() {
+    public void testTenWrongGuesses() {
         game.guess(-3);
         game.guess(-3);
         game.guess(-3);
@@ -69,7 +69,7 @@ public class GuessingGameTest {
     }
 
     @Test
-    public void testTenWrongGuesses() {
+    public void testFourWrongGuesses() {
         makeThreeWrongGuesses();
         String message = game.guess(-3);
         assertEquals("You didn't get it and you've had 4 tries. Game over.", message);
@@ -82,7 +82,7 @@ public class GuessingGameTest {
     }
 
     @Test
-    public void testThreeWrongGuesses() {
+    public void testThreeWrongGuessesAndOneCorrect() {
         makeThreeWrongGuesses();
         int correctAnswer = game.getRandomNumber();
         String message = game.guess(correctAnswer);
@@ -90,11 +90,13 @@ public class GuessingGameTest {
     }
 
     @Test
-    public void testTwoWrongGuesses() {
+    public void testTwoWrongGuessesAndOneCorrect() {
         game.guess(-3);
         game.guess(-3);
         int correctAnswer = game.getRandomNumber();
         String message = game.guess(correctAnswer);
+//        assertTrue(message.contains("3"), "Should indicate 3 tries");
+//        assertTrue(message.contains("You got it"), "Should indicate that we got the right number");
         assertEquals("You got it in 3 tries!", message);
     }
 }

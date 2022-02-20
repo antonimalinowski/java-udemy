@@ -11,12 +11,14 @@ public class GuessingGame {
         String winningMessage = String.format("You got it in %d %s!", counter, tryText);
         String response = null;
 
-        if(counter == 4 && guessedNumber != getRandomNumber()) {
+        if (counter == 4 && guessedNumber != getRandomNumber()) {
             response = String.format("You didn't get it and you've had %d %s. Game over.", counter, tryText);
         } else if (counter > 4) {
             response = "Sorry, you are limited to only 4 tries. Your game is over.";
         } else {
-            response = guessedNumber == getRandomNumber() ? winningMessage : "You didn't get it";
+            String tooLowHighText = guessedNumber < getRandomNumber() ? "- you are too low" : "- you are too high";
+            String loseText = String.format("You didn't get it %s", tooLowHighText).trim();
+            response = guessedNumber == getRandomNumber() ? winningMessage : loseText;
         }
         return response;
     }
