@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GuessingGameTest {
 
+    public static final int GAME_RANDOMNESS_RETRIES = 100;
     private GuessingGame game;
 
     @BeforeEach
@@ -17,7 +18,7 @@ public class GuessingGameTest {
     public void testSimpleWinSituation() {
         int randomNum = game.getRandomNumber();
         String message = game.guess(randomNum);
-        assertEquals("You got it!", message);
+        assertEquals("You got it in 1 try!", message);
     }
 
     @Test
@@ -38,7 +39,7 @@ public class GuessingGameTest {
         // 1 2 3 4 5 6 7 8 9 10
         // 1 1 1 1 0 0 1 1 0  1 -> 10
         int[] randomNumCount = new int[11];
-        for(int counter = 0; counter < 50; counter++) {
+        for(int counter = 0; counter < GAME_RANDOMNESS_RETRIES; counter++) {
             GuessingGame localGame = new GuessingGame();
             int randomNum = localGame.getRandomNumber();
             randomNumCount[randomNum] = 1;
@@ -49,5 +50,35 @@ public class GuessingGameTest {
             sum += randomNumCount[counter];
         }
         assertEquals(10, sum);
+    }
+
+    @Test
+    public void testFourWrongGuesses() {
+        makeThreeWrongGuesses();
+        String message = game.guess(-3);
+        assertEquals("You didn't get it and you had four tries. Game over.", message);
+    }
+
+    private void makeThreeWrongGuesses() {
+        game.guess(-3);
+        game.guess(-3);
+        game.guess(-3);
+    }
+
+    @Test
+    public void testThreeWrongGuesses() {
+        makeThreeWrongGuesses();
+        int correctAnswer = game.getRandomNumber();
+        String message = game.guess(correctAnswer);
+        assertEquals("You got it in 4 tries!", message);
+    }
+
+    @Test
+    public void testTwoWrongGuesses() {
+        game.guess(-3);
+        game.guess(-3);
+        int correctAnswer = game.getRandomNumber();
+        String message = game.guess(correctAnswer);
+        assertEquals("You got it in 3 tries!", message);
     }
 }
