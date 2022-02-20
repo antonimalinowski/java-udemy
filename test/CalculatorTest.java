@@ -1,4 +1,4 @@
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +30,7 @@ public class CalculatorTest {
     }
 
     @Test
+    @Ignore
     public void canAddMaxIntPlusOne() {
         int sum = calc.add(Integer.MAX_VALUE, 1);
         System.out.println(sum); // -2147483648
@@ -42,5 +43,11 @@ public class CalculatorTest {
          * By doing so Integer.MAX_VALUE + 1l will be of type long which has much more room to "grow".
          * Therefore there will be no carry.
          */
+    }
+
+    @Test
+    public void canCalculateAnnuity() {
+        String answer = calc.calculateAnnuity("22000", 7, ".06", 1);
+        assertEquals("$184,664.43", answer);
     }
 }
